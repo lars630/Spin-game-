@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8" />
+<title>ספין הזכייה שלך</title>
+<style>
+  body { font-family: Arial; text-align: center; direction: rtl; background: #222; color: #eee; }
+  #wheel { margin: 40px auto; width: 300px; height: 300px; border: 10px solid #ffcc00; border-radius: 50%; }
+  #spinBtn { padding: 15px 30px; font-size: 24px; background: #ffcc00; border: none; cursor: pointer; border-radius: 10px; }
+  #result { margin-top: 20px; font-size: 20px; min-height: 50px; }
+</style>
+</head>
+<body>
+<h1>ברוך הבא לספין הזכייה!</h1>
+<div id="wheel">
+  <img src="https://i.imgur.com/PO0ruK3.png" alt="גלגל ספין" width="300" height="300" />
+</div>
+<button id="spinBtn">סובב את הגלגל!</button>
+<div id="result"></div>
+
+<script>
+  const prizes = [
+    "5 מטבעות וירטואליים",
+    "כרטיס כניסה חינם",
+    "10 נקודות בונוס",
+    "הזדמנות לזכות ב-Gift Card",
+    "0 פרס - נסה שוב",
+    "30% הנחה בפרס הבא",
+    "פרס מיוחד - קוד קופון",
+    "הגרלה על פרס גדול!"
+  ];
+
+  const spinBtn = document.getElementById('spinBtn');
+  const result = document.getElementById('result');
+  const wheel = document.getElementById('wheel');
+
+  spinBtn.onclick = () => {
+    spinBtn.disabled = true;
+    result.textContent = "הגלגל מסתובב...";
+
+    const spins = Math.floor(Math.random() * 4) + 4;
+    let rotation = spins * 360 + Math.floor(Math.random() * 360);
+
+    wheel.style.transition = 'transform 4s ease-out';
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    setTimeout(() => {
+      const degrees = rotation % 360;
+      const prizeIndex = Math.floor((360 - degrees) / 45) % 8;
+      result.textContent = `מזל טוב! זכית ב: ${prizes[prizeIndex]}`;
+      spinBtn.disabled = false;
+    }, 4000);
+  };
+</script>
+</body>
+</html>
